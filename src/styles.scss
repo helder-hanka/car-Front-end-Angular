@@ -13,3 +13,21 @@ body {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png");
   background-size: cover;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #daddf2;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: auto;
+  margin-top: 200px;
+}
+button {
+  width: 100px;
+  margin: auto;
+}
+.mat-mdc-text-field-wrapper {
+  background-color: #e2e3f0;
+}
