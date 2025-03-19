@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #18a558;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  margin: 0;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.right-links {
+  margin-left: auto; /* Pousse les liens à droite */
+}
+
+a {
+  text-decoration: none;
+  color: #e4e4e4;
+  &:hover {
+    color: #007bff;
+  }
+}

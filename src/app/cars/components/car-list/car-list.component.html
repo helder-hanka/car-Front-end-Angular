@@ -1,0 +1,7 @@
+<div class="card-list-container">
+  <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+  <app-car-list-item
+    *ngFor="let car of postsCar$ | async"
+    [postCar]="car"
+  ></app-car-list-item>
+</div>
