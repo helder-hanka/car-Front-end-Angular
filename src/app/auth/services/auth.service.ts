@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private authSubject = new BehaviorSubject<boolean>(this.hasToken());
-  constructor(private http: HttpClient, private route: Router) {}
+  isAuthenticated$ = this.authSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
 
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
@@ -32,6 +33,5 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.authSubject.next(false);
-    this.route.navigate(['/auth/login']);
   }
 }

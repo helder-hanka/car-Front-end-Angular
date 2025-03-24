@@ -1,6 +1,6 @@
 export class Garage {
   id!: number;
-  nom!: string;
-  adresse!: string;
-  telephone!: string;
+  nomGarage!: string;
+  adresseGarage!: string;
+  telephoneGarage!: string;
 }

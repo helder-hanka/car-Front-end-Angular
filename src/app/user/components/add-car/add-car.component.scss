@@ -1,0 +1,64 @@
+$small: 630px;
+
+form {
+  max-width: 80%;
+  margin: 0 auto; // Centre le formulaire
+}
+
+.add-car-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px; // Ajoute un espace entre les sections
+}
+
+.test {
+  flex: 1 1 45%; // Permet aux sections de prendre environ la moitié de la largeur et de grandir/rétrécir
+  min-width: 300px; // Assure une largeur minimale
+  text-align: center;
+}
+
+.garage-car-container,
+.car-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; // Étire les éléments pour remplir la largeur disponible
+  gap: 15px; // Augmente légèrement l'espacement
+  padding: 20px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.color-date-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; // Ajoute un espace entre les champs
+}
+
+.color,
+.date {
+  flex: 1 1 calc(50% - 7.5px); // Permet aux champs de prendre environ la moitié de la largeur avec un espacement
+  min-width: 150px; // Assure une largeur minimale
+}
+
+@media screen and (max-width: $small) {
+  .add-car-container {
+    flex-direction: column; // Passe à une disposition en colonne sur les petits écrans
+  }
+
+  .color-date-container {
+    flex-direction: column; // Passe également à une disposition en colonne
+  }
+
+  .color,
+  .date {
+    flex: 1 1 100%; // Prend toute la largeur disponible
+  }
+}
+
+section {
+  padding-top: 50px;
+  padding-bottom: 100%;
+}

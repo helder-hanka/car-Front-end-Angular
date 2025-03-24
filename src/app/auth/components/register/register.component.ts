@@ -57,8 +57,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmitForm() {
-    console.log(this.mainForm);
-
     if (this.mainForm.valid) {
       const user: User = {
         email: this.mainForm.value.email,

@@ -35,10 +35,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: () => this.route.navigate(['/user']),
-        error: (err) =>
-          (this.errorMsg = err.error
-            ? err.error
-            : 'Échec de la connexion. Vérifiez vos informations.'),
+        error: (err) => {
+          console.log(err);
+          this.errorMsg = err.error
+            ? err.error['error']
+            : 'Échec de la connexion. Vérifiez vos informations.';
+        },
       });
     }
   }

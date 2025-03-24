@@ -1,14 +1,22 @@
 <header class="container">
   <div><span>My app cars</span></div>
   <ul class="left-links">
-    <li><a routerLink="/cars">Cars</a></li>
-    <li><a routerLink="/mycars">My Cars</a></li>
-    <li><a routerLink="/addcar">Add Car</a></li>
-    <li><a routerLink="/profile">Profile</a></li>
+    <li>
+      <a routerLink="/cars">Cars</a>
+    </li>
+    <li *ngIf="isAuth$ | async"><a routerLink="/user">My Cars</a></li>
+    <li *ngIf="isAuth$ | async">
+      <a routerLink="/user/cars/add-car">Add Car</a>
+    </li>
+    <li *ngIf="isAuth$ | async"><a routerLink="/user/profile">Profile</a></li>
   </ul>
   <ul class="right-links">
-    <li><a routerLink="/auth/login">Login</a></li>
-    <li><a routerLink="/auth/register">Register</a></li>
-    <li><a routerLink="/logout">Logout</a></li>
+    <li *ngIf="!(isAuth$ | async)"><a routerLink="/auth/login">Login</a></li>
+    <li *ngIf="!(isAuth$ | async)">
+      <a routerLink="/auth/register">Register</a>
+    </li>
+    <li *ngIf="isAuth$ | async">
+      <a routerLink="/logout" (click)="logout()">Logout</a>
+    </li>
   </ul>
 </header>

@@ -3,6 +3,9 @@
 html,
 body {
   height: 100%;
+  background: radial-gradient(circle at 6% 55%, #43d7ff, #00000000),
+    radial-gradient(circle at 80% 80%, #0064ff, transparent),
+    linear-gradient(to right, #0073d2, #0cae55);
 }
 body {
   margin: 0;
@@ -25,9 +28,14 @@ form {
   margin-top: 200px;
 }
 button {
-  width: 100px;
+  width: 160px;
   margin: auto;
 }
 .mat-mdc-text-field-wrapper {
   background-color: #e2e3f0;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }
