@@ -19,7 +19,6 @@ export class CarService {
   constructor(private http: HttpClient) {}
 
   private _loading$ = new BehaviorSubject<boolean>(false);
-  // private _loading = false;
   get loading$(): Observable<boolean> {
     return this._loading$.asObservable();
   }
@@ -29,7 +28,13 @@ export class CarService {
     return this._cars$.asObservable();
   }
 
+  private _userCars$ = new BehaviorSubject<Car[]>([]);
+  get userCars$(): Observable<Car[]> {
+    return this._userCars$.asObservable();
+  }
+
   private lastCarsLoad = 0;
+  private lastUserCarsLoad = 0;
 
   private setLoadingStatus(loading: boolean) {
     this._loading$.next(loading);
@@ -41,12 +46,42 @@ export class CarService {
     }
     this.setLoadingStatus(true);
     this.http
-      .get<Car[]>(`${environment.apiUrl}/public`)
+      .get<Car[]>(`${environment.apiUrl}/voiture/public`)
       .pipe(
         delay(1000),
         tap((cars) => {
           this.lastCarsLoad = Date.now();
           this._cars$.next(cars);
+          this.setLoadingStatus(false);
+        })
+      )
+      .subscribe();
+  }
+
+  getUserCars() {
+    if (Date.now() - this.lastUserCarsLoad <= 300000) {
+      return;
+    }
+    this.setLoadingStatus(true);
+    this.http
+      .get<Car[]>(`${environment.apiUrl}/api/user/cars`)
+      .pipe(
+        delay(1000),
+        // map((cars) => {
+        //   return cars.map((car) => {
+        //     if (!car.imageUrl) {
+        //       return {
+        //         ...car,
+        //         imageUrl:
+        //           'https://cdn.pixabay.com/photo/2012/04/12/23/48/car-30990_640.png',
+        //       };
+        //     }
+        //     return car;
+        //   });
+        // }),
+        tap((userCars) => {
+          this.lastUserCarsLoad = Date.now();
+          this._userCars$.next(userCars);
           this.setLoadingStatus(false);
         })
       )
@@ -63,43 +98,52 @@ export class CarService {
       )
     );
   }
+  getUserCarById(id: number): Observable<Car> {
+    if (!this.lastUserCarsLoad) {
+      this.getUserCars();
+    }
+    return this.userCars$.pipe(
+      map((cars) => cars.filter((car) => car.id === id)[0])
+    );
+  }
 
   addCar(car: Car): Observable<Car> {
     this.setLoadingStatus(true);
-    return this.http.post<Car>(`${environment.apiUrlcar}/create`, car).pipe(
-      tap((addedCar) => {
-        const currentCars = this._cars$.value;
-        this._cars$.next([...currentCars, addedCar]);
+    return this.http
+      .post<Car>(`${environment.apiUrl}/voiture/create`, car)
+      .pipe(
+        tap((addedCar) => {
+          this.lastUserCarsLoad = +400000;
+          this.setLoadingStatus(false);
+        })
+      );
+  }
+
+  updatedCar(car: Car): Observable<Car> {
+    this.setLoadingStatus(true);
+    return this.http
+      .put<Car>(`${environment.apiUrl}/voiture/${car.id}`, car)
+      .pipe(
+        tap((updateCar) => {
+          const currentCars = this._userCars$.value.map((car) =>
+            car.id === updateCar.id ? updateCar : car
+          );
+          this._userCars$.next(currentCars);
+          this.setLoadingStatus(false);
+        })
+      );
+  }
+
+  deleteCar(id: number): Observable<void> {
+    this.setLoadingStatus(true);
+    return this.http.delete<void>(`${environment.apiUrl}/voiture/${id}`).pipe(
+      tap(() => {
+        const currentCars = this._userCars$.value.filter(
+          (car) => car.id !== id
+        );
+        this._userCars$.next(currentCars);
         this.setLoadingStatus(false);
       })
     );
   }
-
-  deleteCar(id: number): void {
-    this.setLoadingStatus(false);
-    this.http
-      .delete(`${environment.apiUrlcar}/${id}`)
-      .pipe(
-        switchMap(() => this.cars$),
-        take(1),
-        map((cars) => cars.filter((car) => car.id !== id)),
-        tap((cars) => {
-          this._cars$.next(cars);
-          this.setLoadingStatus(false);
-        })
-      )
-      .subscribe();
-  }
-
-  // getCars(): Observable<Car[]> {
-  //   this._loading = true;
-  //   this.setLoadingStatus(true);
-  //   return this.http.get<Car[]>(`${environment.apiUrl}/public`).pipe(
-  //     delay(1000),
-  //     tap(() => {
-  //       console.log('THIS', this._loading);
-  //       this.setLoadingStatus(false);
-  //     })
-  //   );
-  // }
 }

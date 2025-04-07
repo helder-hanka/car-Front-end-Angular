@@ -6,11 +6,16 @@
   </mat-card-header>
   <mat-card-footer>
     <a mat-list-item [routerLink]="postCar.id?.toString()">
-      <img
-        mat-card-image
-        src="https://cdn.pixabay.com/photo/2012/04/12/23/48/car-30990_640.png"
-        alt="Photo of a Shiba Inu"
-      />
+      <ng-container *ngIf="postCar.imageUrl; else defaultImage">
+        <img mat-card-image [src]="postCar.imageUrl" [alt]="postCar.modele" />
+      </ng-container>
+      <ng-template #defaultImage>
+        <img
+          mat-card-image
+          src="https://cdn.pixabay.com/photo/2012/04/12/23/48/car-30990_640.png"
+          [alt]="postCar.modele"
+        />
+      </ng-template>
       <mat-card-content class="mat-card-content">
         <mat-card-title>{{ postCar.marque }}</mat-card-title>
         <mat-card-subtitle>{{ postCar.modele }}</mat-card-subtitle>

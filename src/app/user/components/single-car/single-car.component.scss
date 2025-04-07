@@ -1,0 +1,45 @@
+.mat-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.single-car-container {
+  display: flex;
+  justify-content: center;
+}
+.example-card {
+  max-width: 800px;
+}
+.single-car-container {
+  margin-top: 200px;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.text-container {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.text-container > *:nth-child(-n + 2),
+.header-container > *:nth-child(-n + 2) {
+  flex-grow: 1;
+}
+.header-container:nth-last-child(-n + 1) {
+  margin-left: 10px;
+}
+.header-container {
+  align-items: flex-start;
+}
+button span {
+  font-size: 20px;
+}
+.edit-delete-container {
+  align-items: center;
+}

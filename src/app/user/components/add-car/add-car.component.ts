@@ -3,7 +3,6 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarService } from '../../../cars/services/car.service';
 import { Router } from '@angular/router';
-import { Car } from '../../../cars/models/car';
 
 @Component({
   selector: 'app-add-car',
@@ -30,16 +29,16 @@ export class AddCarComponent implements OnInit {
       immatriculation: ['', [Validators.required]],
       modele: ['', [Validators.required]],
       marque: ['', [Validators.required]],
-      color: ['', [Validators.required]],
+      color: ['#FFFFFF', [Validators.required]],
       annee: ['', [Validators.required]],
       nomGarage: ['', [Validators.required]],
       adresseGarage: ['', [Validators.required]],
       telephoneGarage: ['', [Validators.required]],
+      imageUrl: ['', [Validators.required]],
     });
   }
 
   onSubmitForm() {
-    console.log(this.mainForm);
     if (this.mainForm.valid) {
       this.carService.addCar(this.mainForm.value).subscribe({
         next: (addCar) => {
@@ -48,7 +47,6 @@ export class AddCarComponent implements OnInit {
           this.mainForm.reset();
         },
         error: (err) => {
-          console.log('Err: ', err);
           this.errorMessage = err
             ? err.error['error']
             : "Une erreur est survenue lors de l'ajout de la voiture.";

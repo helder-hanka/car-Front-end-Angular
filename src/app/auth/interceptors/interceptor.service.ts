@@ -48,12 +48,10 @@ import { Observable } from 'rxjs';
 export const InterceptorService: HttpInterceptorFn = (req: any, next: any) => {
   const token = localStorage.getItem('token');
   let requestToSend = req;
-  console.log('TOKEN: ', token);
 
   if (token) {
     const headers = req.headers.set('Authorization', 'Bearer ' + token);
     requestToSend = req.clone({ headers });
   }
-  console.log(requestToSend);
   return next(requestToSend);
 };

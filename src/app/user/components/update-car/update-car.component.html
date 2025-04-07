@@ -2,7 +2,12 @@
   <form [formGroup]="mainForm" (ngSubmit)="onSubmitForm()">
     <div class="add-car-container">
       <div class="test">
-        <h2>Voiture</h2>
+        <div class="title-btn-back" *ngIf="car$ | async as car">
+          <h2>Voiture</h2>
+          <button mat-fab (click)="onGoBack()">
+            <mat-icon fontIcon="arrow_back_sharp"></mat-icon>
+          </button>
+        </div>
         <div class="car-container">
           <mat-form-field appearance="outline">
             <mat-label>Immatriculation</mat-label>
@@ -44,7 +49,6 @@
               La marque est requise.
             </mat-error>
           </mat-form-field>
-
           <mat-form-field appearance="outline">
             <mat-label>Image URL</mat-label>
             <input matInput type="url" formControlName="imageUrl" required />
@@ -53,6 +57,7 @@
               L'image URL est requise.
             </mat-error>
           </mat-form-field>
+
           <div class="color-date-container">
             <mat-form-field appearance="outline" class="color">
               <mat-label>Couleur</mat-label>
@@ -130,15 +135,19 @@
         </div>
       </div>
     </div>
-
-    <button
-      [disabled]="mainForm.invalid"
-      mat-raised-button
-      color="primary"
-      type="submit"
-    >
-      Valider
-    </button>
+    <ng-container *ngIf="loadingGetCar; else defaultBtn">
+      <mat-spinner *ngIf="loadingGetCar" />
+    </ng-container>
+    <ng-template #defaultBtn>
+      <button
+        [disabled]="mainForm.pristine || mainForm.invalid"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Modifier
+      </button>
+    </ng-template>
     <div *ngIf="errorMessage" class="error-message">
       <span>{{ errorMessage }}</span>
     </div>
