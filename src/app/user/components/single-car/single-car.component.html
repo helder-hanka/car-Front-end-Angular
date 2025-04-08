@@ -1,0 +1,68 @@
+<div class="single-car-container">
+  <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+  <mat-card
+    class="example-card"
+    appearance="outlined"
+    *ngIf="car$ | async as postCar"
+  >
+    <mat-card-header class="header-container">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{
+          postCar.userProfile.firstName | uppercase
+        }}</mat-card-title>
+        <mat-card-subtitle>{{
+          postCar.userProfile.lastName | titlecase
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-header class="edit-delete-container">
+        <a mat-button [routerLink]="['/user/cars/update-car', postCar.id]">
+          <mat-icon fontIcon="edit"></mat-icon>
+        </a>
+        <button
+          *ngIf="postCar.id !== undefined"
+          (click)="deleteCar(postCar.id)"
+          mat-icon-button
+          aria-label="Supprimer"
+        >
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+      </mat-card-header>
+    </mat-card-header>
+    <mat-card-footer>
+      <img mat-card-image [src]="postCar.imageUrl" [alt]="postCar.modele" />
+      <mat-card-content class="text-container">
+        <mat-card-content class="text">
+          <mat-card-content class="mat-card-content">
+            <mat-card-title>{{ postCar.marque | titlecase }}</mat-card-title>
+            <mat-card-subtitle>{{
+              postCar.modele | uppercase
+            }}</mat-card-subtitle>
+            <mat-card-subtitle>{{
+              postCar.annee | date : "yyyy"
+            }}</mat-card-subtitle>
+          </mat-card-content>
+          <mat-card-content>
+            <mat-card-subtitle class="color">
+              couleur:
+              <mat-icon
+                aria-hidden="false"
+                aria-label="Icône de voiture"
+                fontIcon="directions_car"
+                [style]="postCar.color"
+              ></mat-icon
+            ></mat-card-subtitle>
+            <mat-card-subtitle>{{
+              postCar.immatriculation | uppercase
+            }}</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card-content>
+        <mat-card-content>
+          <mat-card-subtitle>{{ postCar.garage.nom }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ postCar.garage.adresse }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ postCar.garage.telephone }}</mat-card-subtitle>
+        </mat-card-content>
+      </mat-card-content>
+    </mat-card-footer>
+  </mat-card>
+</div>

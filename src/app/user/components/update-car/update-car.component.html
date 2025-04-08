@@ -1,0 +1,158 @@
+<section>
+  <form [formGroup]="mainForm" (ngSubmit)="onSubmitForm()">
+    <div class="add-car-container">
+      <div class="test">
+        <div class="title-btn-back" *ngIf="car$ | async as car">
+          <h2>Voiture</h2>
+          <button mat-fab (click)="onGoBack()">
+            <mat-icon fontIcon="arrow_back_sharp"></mat-icon>
+          </button>
+        </div>
+        <div class="car-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Immatriculation</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="immatriculation"
+              required
+            />
+            <mat-icon matSuffix>directions_car</mat-icon>
+            <mat-error
+              *ngIf="mainForm.get('immatriculation')?.hasError('required')"
+            >
+              Veuillez entrer l'immatriculation.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                mainForm.get('immatriculation')?.hasError('immatriculation')
+              "
+            >
+              Veuillez entrer une immatriculation valide.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Modèle</mat-label>
+            <input matInput type="text" formControlName="modele" required />
+            <mat-icon matSuffix>model_training</mat-icon>
+            <mat-error *ngIf="mainForm.get('modele')?.hasError('required')">
+              Le modèle est requis.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Marque</mat-label>
+            <input matInput type="text" formControlName="marque" required />
+            <mat-icon matSuffix>branding_watermark</mat-icon>
+            <mat-error *ngIf="mainForm.get('marque')?.hasError('required')">
+              La marque est requise.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Image URL</mat-label>
+            <input matInput type="url" formControlName="imageUrl" required />
+            <mat-icon matSuffix>branding_watermark</mat-icon>
+            <mat-error *ngIf="mainForm.get('marque')?.hasError('required')">
+              L'image URL est requise.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="color-date-container">
+            <mat-form-field appearance="outline" class="color">
+              <mat-label>Couleur</mat-label>
+              <input matInput type="color" formControlName="color" required />
+              <mat-icon matSuffix>palette</mat-icon>
+              <mat-error *ngIf="mainForm.get('color')?.hasError('required')">
+                La couleur est requise.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="date">
+              <mat-label>Année de la voiture</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="annee"
+                required
+              />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="mainForm.get('annee')?.hasError('required')">
+                L'année est requise.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="test">
+        <h2>Garage voiture</h2>
+        <div class="garage-car-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom du garage</mat-label>
+            <input matInput type="text" formControlName="nomGarage" required />
+            <mat-icon matSuffix>garage</mat-icon>
+            <mat-error *ngIf="mainForm.get('nomGarage')?.hasError('required')">
+              Le garage est requis.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Adresse du garage</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="adresseGarage"
+              required
+            />
+            <mat-icon matSuffix>location_on</mat-icon>
+            <mat-error
+              *ngIf="mainForm.get('adresseGarage')?.hasError('required')"
+            >
+              L'adresse du garage est requise.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Téléphone du garage</mat-label>
+            <input
+              matInput
+              type="tel"
+              formControlName="telephoneGarage"
+              required
+            />
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error
+              *ngIf="mainForm.get('telephoneGarage')?.hasError('required')"
+            >
+              Le téléphone du garage est requis.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="loadingGetCar; else defaultBtn">
+      <mat-spinner *ngIf="loadingGetCar" />
+    </ng-container>
+    <ng-template #defaultBtn>
+      <button
+        [disabled]="mainForm.pristine || mainForm.invalid"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Modifier
+      </button>
+    </ng-template>
+    <div *ngIf="errorMessage" class="error-message">
+      <span>{{ errorMessage }}</span>
+    </div>
+    <div *ngIf="successMsg" class="successMsg">
+      <span>{{ successMsg }}</span>
+    </div>
+  </form>
+</section>

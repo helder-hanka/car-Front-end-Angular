@@ -1,0 +1,25 @@
+<section>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required />
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
+        >Veuillez entrer une adresse email valide</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="password" required />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error>Le mot de passe est requis</mat-error>
+    </mat-form-field>
+    <button [disabled]="loginForm.invalid" mat-raised-button color="primary">
+      Validez
+    </button>
+    <div *ngIf="errorMsg" class="error-message">
+      <span>{{ errorMsg }}</span>
+    </div>
+  </form>
+</section>

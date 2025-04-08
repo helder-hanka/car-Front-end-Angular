@@ -8,6 +8,7 @@ export class Car {
   marque!: string;
   modele!: string;
   annee!: Date;
+  imageUrl!: string;
   color!: Color;
   garage!: Garage;
   userProfile!: UserProfile;

@@ -1,0 +1,72 @@
+<section>
+  <form [formGroup]="mainForm" (ngSubmit)="onSubmitForm()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required />
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="mainForm.get('email')?.hasError('required')">
+        Veuillez entrer une adresse email.
+      </mat-error>
+      <mat-error *ngIf="mainForm.get('email')?.hasError('email')">
+        Veuillez entrer une adresse email valide.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="password" required />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error *ngIf="mainForm.get('password')?.hasError('required')">
+        Le mot de passe est requis.
+      </mat-error>
+      <mat-error *ngIf="mainForm.get('password')?.hasError('minlength')">
+        Le mot de passe doit contenir au moins 6 caractères.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Confirmer le mot de passe</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="confirmpassword"
+        required
+      />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error *ngIf="mainForm.get('confirmpassword')?.hasError('required')">
+        La confirmation du mot de passe est requise.
+      </mat-error>
+      <mat-error
+        *ngIf="
+          mainForm.get('confirmpassword')?.dirty &&
+          mainForm.hasError('passwordMismatch')
+        "
+      >
+        Les mots de passe ne correspondent pas.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Sélectionner le rôle</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option value="ADMIN">Admin</mat-option>
+        <mat-option value="USER">User</mat-option>
+      </mat-select>
+      <mat-error *ngIf="mainForm.get('role')?.hasError('required')">
+        Le rôle est requis.
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      [disabled]="mainForm.invalid"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      S'inscrire
+    </button>
+    <div *ngIf="errorMessage" class="error-message">
+      <span>{{ errorMessage }}</span>
+    </div>
+  </form>
+</section>

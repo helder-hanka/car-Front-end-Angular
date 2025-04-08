@@ -2,6 +2,9 @@
 
 html,
 body {
+  background: radial-gradient(circle at 6% 55%, #43d7ff, #00000000),
+    radial-gradient(circle at 80% 80%, #0064ff, transparent),
+    linear-gradient(to right, #0073d2, #0cae55);
   height: 100%;
 }
 body {
@@ -12,4 +15,45 @@ body {
 .example-header-image {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png");
   background-size: cover;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #daddf2;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: auto;
+  margin-top: 200px;
+
+  mat-form-field {
+    margin-bottom: 16px;
+
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
+      }
+    }
+  }
+}
+button {
+  width: 160px;
+  margin: auto;
+}
+.mat-mdc-text-field-wrapper {
+  background-color: #e2e3f0;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+.successMsg {
+  color: #0cae55;
+}
+img {
+  width: 100%;
 }

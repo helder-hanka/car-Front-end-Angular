@@ -1,0 +1,45 @@
+<section>
+  <form [formGroup]="mainForm" (ngSubmit)="onSubmitForm()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput type="text" formControlName="firstName" required />
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="mainForm.get('firstName')?.hasError('required')">
+        Le Nom est requis.
+      </mat-error>
+      <mat-error *ngIf="mainForm.get('firstName')?.hasError('minlength')">
+        Le mot de Nom doit contenir au moins 3 caractères.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prénom</mat-label>
+      <input matInput type="text" formControlName="lastName" required />
+      <mat-icon matSuffix>badge</mat-icon>
+      <mat-error *ngIf="mainForm.get('lastName')?.hasError('required')">
+        La Prénom est requise.
+      </mat-error>
+      <mat-error *ngIf="mainForm.get('lastName')?.hasError('minlength')">
+        Le mot de Nom doit contenir au moins 3 caractères.
+      </mat-error>
+    </mat-form-field>
+    <mat-card-actions>
+      <mat-spinner *ngIf="loading"></mat-spinner>
+      <button
+        *ngIf="!loading"
+        [disabled]="mainForm.invalid"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        {{ isExistProfile ? "Modifier" : "Enregistrer" }}
+      </button>
+    </mat-card-actions>
+    <div *ngIf="errorMessage" class="error-message">
+      <span>{{ errorMessage }}</span>
+    </div>
+    <div *ngIf="successMsg" class="successMsg">
+      <span>{{ successMsg }}</span>
+    </div>
+  </form>
+</section>
